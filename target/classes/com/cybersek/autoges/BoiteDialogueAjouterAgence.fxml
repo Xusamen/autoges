@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="225.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cybersek.autoges.BoiteDialogueAjoutAgenceControleur">
+   <children>
+      <Label alignment="CENTER" layoutY="12.0" prefHeight="37.0" prefWidth="430.0" text="Ajouter une agence">
+         <font>
+            <Font name="Segoe UI Bold" size="30.0" />
+         </font>
+      </Label>
+      <TextField fx:id="champ_nom_agence" layoutX="24.0" layoutY="100.0" stylesheets="@css/style.css" />
+      <TextField fx:id="champ_localisation" layoutX="257.0" layoutY="100.0" stylesheets="@css/style.css" />
+      <Button cancelButton="true" layoutX="88.0" layoutY="169.0" mnemonicParsing="false" onAction="#AnnulerAjoutAgence" styleClass="rouge-button" stylesheets="@css/button_bilan.css" text="Annuler" />
+      <Button defaultButton="true" layoutX="202.0" layoutY="169.0" mnemonicParsing="false" onAction="#AjouterAgence" prefHeight="25.0" prefWidth="149.0" styleClass="consulter-button" stylesheets="@css/button_bilan.css" text="Ajouter" />
+      <Label layoutX="24.0" layoutY="83.0" prefHeight="17.0" prefWidth="149.0" text="Nom" />
+      <Label layoutX="257.0" layoutY="83.0" prefHeight="17.0" prefWidth="149.0" text="Localisation" />
+   </children>
+</Pane>

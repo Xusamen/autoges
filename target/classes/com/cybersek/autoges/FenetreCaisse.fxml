@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="671.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cybersek.autoges.FenetreCaisseControleur">
+   <children>
+      <TabPane layoutX="103.0" layoutY="184.0" prefHeight="200.0" prefWidth="200.0" stylesheets="@css/tabpane.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="VERSEMENT">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tableau_versement" layoutX="79.0" layoutY="161.0" prefHeight="200.0" prefWidth="200.0" stylesheets="@css/style.css" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="150.0">
+                          <columns>
+                            <TableColumn fx:id="colonne_matricule_versement" prefWidth="200.0" text="Matricule" />
+                            <TableColumn fx:id="colonne_nom_versement" prefWidth="200.0" text="Nom" />
+                              <TableColumn fx:id="colonne_prenoms_versement" prefWidth="300.0" text="Prenoms" />
+                              <TableColumn fx:id="colonne_contact_versement" prefWidth="100.0" text="Contact" />
+                              <TableColumn fx:id="colonne_categorie_versement" prefWidth="100.0" text="Categorie" />
+                              <TableColumn fx:id="colonne_forfait_versement" prefWidth="100.0" text="Forfait" />
+                              <TableColumn fx:id="colonne_reste_versement" prefWidth="100.0" text="Reste (CFA)" />
+                              <TableColumn fx:id="colonne_actions_versement" prefWidth="250.0" text="Actions" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <Pane prefHeight="65.0" prefWidth="1255.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 10;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="76.0">
+                           <children>
+                              <Label layoutX="5.0" prefHeight="66.0" prefWidth="111.0" text="Filtre --&gt;">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <ChoiceBox fx:id="choicebox_annee_versement" layoutX="148.0" layoutY="30.0" prefWidth="150.0" stylesheets="@css/choice_box.css" />
+                              <Label layoutX="148.0" layoutY="10.0" prefHeight="17.0" prefWidth="150.0" text="Année" />
+                              <TextField fx:id="champ_nom_versement" layoutX="640.0" layoutY="30.0" stylesheets="@css/style.css" />
+                              <Label layoutX="641.0" layoutY="10.0" prefHeight="17.0" prefWidth="150.0" text="Nom" />
+                              <TextField fx:id="champ_prenom_versement" layoutX="821.0" layoutY="30.0" stylesheets="@css/style.css" />
+                              <Label layoutX="822.0" layoutY="10.0" prefHeight="17.0" prefWidth="150.0" text="Prenoms" />
+                           </children>
+                        </Pane>
+                        <Label alignment="CENTER" prefHeight="45.0" prefWidth="769.0" text="Versement Candidat" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="System Bold" size="30.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="SERVICES TIERS">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TabPane layoutX="129.0" layoutY="66.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                          <tabs>
+                            <Tab text="Enregister un service tier">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <StackPane prefHeight="555.3333333333334" prefWidth="1250.6666666666667" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="424.0" prefWidth="680.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;">
+                                                   <children>
+                                                      <Label alignment="CENTER" layoutY="14.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="60.0" prefWidth="680.0" text="Enregistrer Services Tiers">
+                                                         <font>
+                                                            <Font name="System Bold" size="25.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <TextField fx:id="description_service_tiers" focusTraversable="false" layoutX="100.0" layoutY="236.0" prefHeight="25.0" prefWidth="160.0" stylesheets="@css/style.css" />
+                                                      <Label layoutX="100.0" layoutY="219.0" prefHeight="17.0" prefWidth="180.0" text="Description du service" textFill="#2196f3">
+                                                         <font>
+                                                            <Font name="System Bold Italic" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label layoutX="100.0" layoutY="289.0" prefHeight="17.0" prefWidth="180.0" text="Mode de paiement" textFill="#2196f3">
+                                                         <font>
+                                                            <Font name="System Bold Italic" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <TextField fx:id="montant_servicetiers" focusTraversable="false" layoutX="400.0" layoutY="306.0" prefHeight="25.0" prefWidth="160.0" stylesheets="@css/style.css" />
+                                                      <Label layoutX="400.0" layoutY="289.0" prefHeight="17.0" prefWidth="160.0" text="Montant" textFill="RED">
+                                                         <font>
+                                                            <Font name="System Bold" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Button defaultButton="true" layoutX="229.0" layoutY="370.0" mnemonicParsing="false" onAction="#Enregistrer_service_tiers" prefHeight="32.0" prefWidth="222.0" styleClass="consulter-button" stylesheets="@css/button_bilan.css" text="ENREGISTRER">
+                                                         <font>
+                                                            <Font name="System Bold" size="12.0" />
+                                                         </font>
+                                                      </Button>
+                                                      <ChoiceBox fx:id="type_de_paiement_service_tiers" focusTraversable="false" layoutX="100.0" layoutY="306.0" prefHeight="25.0" prefWidth="180.0" stylesheets="@css/choice_box.css" />
+                                                      <Label layoutX="48.0" layoutY="106.0" prefHeight="17.0" prefWidth="158.0" text="Nom" textFill="#2196f3">
+                                                         <font>
+                                                            <Font name="System Bold Italic" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label layoutX="457.0" layoutY="106.0" prefHeight="17.0" prefWidth="159.0" text="Télephone" textFill="#2196f3">
+                                                         <font>
+                                                            <Font name="System Bold Italic" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <TextField fx:id="nom_service_tiers" layoutX="48.0" layoutY="123.0" prefHeight="25.0" prefWidth="160.0" stylesheets="@css/style.css" />
+                                                      <TextField fx:id="telephone_service_tiers" layoutX="457.0" layoutY="123.0" prefHeight="25.0" prefWidth="160.0" stylesheets="@css/style.css" />
+                                                      <Label layoutX="400.0" layoutY="218.0" prefWidth="160.0" text="Nombre de seances" textFill="#2196f3">
+                                                         <font>
+                                                            <Font name="System Bold Italic" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <TextField fx:id="nombresceance_servicetiers" layoutX="400.0" layoutY="236.0" prefWidth="160.0" stylesheets="@css/style.css" />
+                                                      <Label layoutX="259.0" layoutY="106.0" prefHeight="17.0" prefWidth="180.0" text="Prenoms" textFill="#2196f3">
+                                                         <font>
+                                                            <Font name="System Bold Italic" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <TextField fx:id="prenom_service_tiers" layoutX="259.0" layoutY="123.0" prefHeight="25.0" prefWidth="160.0" stylesheets="@css/style.css" />
+                                                   </children>
+                                                   <effect>
+                                                      <DropShadow height="48.0" radius="29.0" width="70.0" />
+                                                   </effect>
+                                                </Pane>
+                                             </children>
+                                          </StackPane>
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </Tab>
+                            <Tab text="Recapitulatif des services tiers">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TableView fx:id="tableau_servtier" layoutX="35.0" layoutY="91.0" prefHeight="200.0" prefWidth="200.0" stylesheets="@css/style.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="150.0">
+                                            <columns>
+                                              <TableColumn fx:id="colonne_nom_servtier" prefWidth="200.0" text="Nom" />
+                                              <TableColumn fx:id="colonne_prenoms_servtier" prefWidth="300.0" text="Prenoms" />
+                                                <TableColumn fx:id="colonne_contact_servtier" prefWidth="100.0" text="Contact" />
+                                                <TableColumn fx:id="colonne_prestserv_servtier" prefWidth="350.0" text="Prestation de service" />
+                                                <TableColumn fx:id="colonne_montant_servtier" prefWidth="100.0" text="Montant (CFA)" />
+                                                <TableColumn fx:id="colonne_actions_servtier" prefWidth="200.0" text="Actions" />
+                                            </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                          <Label alignment="CENTER" prefHeight="45.0" prefWidth="769.0" text="Recapitulatif" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                             <font>
+                                                <Font name="System Bold" size="30.0" />
+                                             </font>
+                                          </Label>
+                                          <Pane layoutY="76.0" prefHeight="65.0" prefWidth="1255.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 10;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="76.0">
+                                             <children>
+                                                <Label prefHeight="66.0" prefWidth="111.0" text="Filtre --&gt;">
+                                                   <font>
+                                                      <Font name="System Bold" size="25.0" />
+                                                   </font>
+                                                </Label>
+                                                <ChoiceBox fx:id="choicebox_annee_servtier" layoutX="148.0" layoutY="30.0" prefWidth="150.0" stylesheets="@css/choice_box.css" />
+                                                <Label layoutX="148.0" layoutY="10.0" prefHeight="17.0" prefWidth="150.0" text="Année" />
+                                                <TextField fx:id="champ_nom_servtier" layoutX="640.0" layoutY="30.0" stylesheets="@css/style.css" />
+                                                <Label layoutX="641.0" layoutY="10.0" prefHeight="17.0" prefWidth="150.0" text="Nom" />
+                                                <TextField fx:id="champ_prenom_servtier" layoutX="821.0" layoutY="30.0" stylesheets="@css/style.css" />
+                                                <Label layoutX="822.0" layoutY="10.0" prefHeight="17.0" prefWidth="150.0" text="Prenoms" />
+                                             </children>
+                                          </Pane>
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </Tab>
+                          </tabs>
+                        </TabPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="DECAISSEMENT">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="347.0" prefWidth="680.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;">
+                                 <children>
+                                    <Label alignment="CENTER" layoutY="14.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="60.0" prefWidth="680.0" text="DECAISSEMENT">
+                                       <font>
+                                          <Font name="System Bold" size="25.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="58.0" layoutY="131.0" prefHeight="17.0" prefWidth="149.0" text="Motif du décaissement" textFill="#2196f3">
+                                       <font>
+                                          <Font name="System Bold Italic" size="12.0" />
+                                       </font></Label>
+                                    <Label layoutX="265.0" layoutY="131.0" prefHeight="17.0" prefWidth="143.0" text="Mode de décaissement" textFill="#2196f3">
+                                       <font>
+                                          <Font name="System Bold Italic" size="12.0" />
+                                       </font></Label>
+                                    <TextField fx:id="montant_decaissement" focusTraversable="false" layoutX="475.0" layoutY="150.0" prefHeight="25.0" prefWidth="150.0" stylesheets="@css/style.css" />
+                                    <Label layoutX="475.0" layoutY="131.0" prefHeight="17.0" prefWidth="143.0" text="Montant" textFill="RED">
+                                       <font>
+                                          <Font name="System Bold Italic" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="bouton_enregistrement_decaissement" defaultButton="true" layoutX="229.0" layoutY="263.0" mnemonicParsing="false" onAction="#Enregistrer_decaissement" prefHeight="32.0" prefWidth="222.0" styleClass="consulter-button" stylesheets="@css/button_bilan.css" text="ENREGISTRER">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font></Button>
+                                    <ChoiceBox fx:id="type_de_decaissement" focusTraversable="false" layoutX="265.0" layoutY="150.0" prefHeight="25.0" prefWidth="150.0" stylesheets="@css/choice_box.css" />
+                                    <ChoiceBox fx:id="motif_de_decaissement" focusTraversable="false" layoutX="57.0" layoutY="150.0" prefHeight="25.0" prefWidth="150.0" stylesheets="@css/choice_box.css" />
+                                 </children>
+                                 <effect>
+                                    <DropShadow height="48.0" radius="29.0" width="70.0" />
+                                 </effect>
+                              </Pane>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab onSelectionChanged="#initialisation_bilan_journalier" text="BILAN FINANCIER JOURNALIER">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tableau_entree" layoutY="60.0" prefHeight="380.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="60.0">
+                          <columns>
+                            <TableColumn fx:id="colonne_numero_entrees" prefWidth="30.0" text="N°" />
+                            <TableColumn fx:id="colonne_description_entrees" prefWidth="300.0" text="DESCRIPTION" />
+                              <TableColumn fx:id="colonne_somme_entrees" prefWidth="70.0" text="SOMME" />
+                              <TableColumn fx:id="colonne_compte_entrees" prefWidth="70.0" text="COMPTE" />
+                              <TableColumn fx:id="colonne_modetransac_entrees" prefWidth="115.0" text="Mode Transaction" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <TableView fx:id="tableau_sortie" layoutX="700.0" layoutY="60.0" prefHeight="380.0" prefWidth="600.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+                          <columns>
+                            <TableColumn fx:id="colonne_numero_sorties" prefWidth="30.0" text="N°" />
+                            <TableColumn fx:id="colonne_description_sorties" prefWidth="300.0" text="DESCRIPTION" />
+                              <TableColumn fx:id="colonne_somme_sorties" prefWidth="70.0" text="SOMME" />
+                              <TableColumn fx:id="colonne_compte_sorties" prefWidth="70.0" text="COMPTE" />
+                              <TableColumn fx:id="colonne_modetransac_sortie" prefWidth="115.0" text="Mode Transaction" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <Label alignment="CENTER" layoutY="21.0" prefHeight="39.0" prefWidth="600.0" text="ENTREES" AnchorPane.leftAnchor="0.0">
+                           <font>
+                              <Font name="System Bold" size="25.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="700.0" layoutY="21.0" prefHeight="39.0" prefWidth="600.0" text="SORTIES" AnchorPane.rightAnchor="0.0">
+                           <font>
+                              <Font name="System Bold" size="25.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" layoutY="440.0" prefHeight="52.0" prefWidth="1300.0" style="-fx-background-color: FFFFFF;" text="BILAN DU JOUR" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                           <font>
+                              <Font name="System Bold" size="26.0" />
+                           </font>
+                        </Label>
+                        <GridPane hgap="20.0" layoutY="492.0" prefHeight="118.0" prefWidth="1300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: FFFFFF;">
+                                 <children>
+                                    <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="45.0" prefWidth="420.0" style="-fx-background-color: #01D758; -fx-background-radius: 10;" text="Total Entrées">
+                                       <font>
+                                          <Font name="System Bold" size="25.0" />
+                                       </font>
+                                    </Label>
+                                    <Text fx:id="statistique_total_entrees" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="421.13671875">
+                                       <font>
+                                          <Font size="55.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: FFFFFF;" GridPane.columnIndex="1">
+                                 <children>
+                                    <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="45.0" prefWidth="28.0" style="-fx-background-color: #FF5E4D; -fx-background-radius: 10;" text="Total Sorties">
+                                       <font>
+                                          <Font name="System Bold" size="30.0" />
+                                       </font>
+                                    </Label>
+                                    <Text fx:id="statistique_total_sorties" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="421.13671875">
+                                       <font>
+                                          <Font size="55.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
+                                 <children>
+                                    <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="45.0" prefWidth="28.0" style="-fx-background-color: #26C4EC; -fx-background-radius: 10;" text="Solde">
+                                       <font>
+                                          <Font name="System Bold" size="25.0" />
+                                       </font>
+                                    </Label>
+                                    <Text fx:id="statistique_total_global" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="421.13671875">
+                                       <font>
+                                          <Font size="55.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </GridPane>
+                        <Button fx:id="bouton_lancer_impress_bilan" layoutX="1169.0" layoutY="615.0" mnemonicParsing="false" onAction="#Lancer_Impression_bilan_journalier" prefHeight="28.0" prefWidth="215.0" styleClass="pdf-button" stylesheets="@css/button_bilan.css" text="IMPRESSION BILAN JOURNALIER" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Button>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab onSelectionChanged="#initialisation_bilan_mensuel" text="BILANS FINANCIERS MENSUELS">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tableMensuelle" layoutX="73.0" layoutY="90.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 6;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="10.0">
+                          <columns>
+                            <TableColumn fx:id="colMois" prefWidth="125.0" text="MOIS" />
+                            <TableColumn fx:id="colEntree_mois" prefWidth="125.0" text="TOTAL ENTREES" />
+                              <TableColumn fx:id="colSortie_mois" prefWidth="125.0" text="TOTAL SORTIES" />
+                              <TableColumn fx:id="colSolde_mois" prefWidth="125.0" text="SOLDE" />
+                              <TableColumn fx:id="action_bilan_mensuel" prefWidth="250.0" text="ACTIONS" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                           <effect>
+                              <DropShadow height="59.0" radius="31.75" width="70.0" />
+                           </effect>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab onSelectionChanged="#initialisation_bilan_annuel" text="BILANS FINANCIERS ANNUELS">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tableAnnuelle" prefHeight="633.7142857142857" prefWidth="1296.0" style="-fx-background-radius: 6;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="10.0">
+                           <columns>
+                              <TableColumn fx:id="colAnnee" prefWidth="125.0" text="ANNEES" />
+                              <TableColumn fx:id="colEntree_annee" prefWidth="125.0" text="TOTAL ENTREES" />
+                              <TableColumn fx:id="colSortie_annee" prefWidth="125.0" text="TOTAL SORTIES" />
+                              <TableColumn fx:id="colSolde_annee" prefWidth="125.0" text="SOLDE" />
+                              <TableColumn fx:id="action_bilan_annuel" prefWidth="250.0" text="ACTIONS" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                           <effect>
+                              <DropShadow height="59.0" radius="31.75" width="70.0" />
+                           </effect>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

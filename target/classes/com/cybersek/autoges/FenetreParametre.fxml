@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1300.0" stylesheets="@css/tabpane.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cybersek.autoges.FenetreParametreControleur">
+  <tabs>
+    <Tab onSelectionChanged="#initialize_utilisateur" text="Gestion utilisateurs">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="tableau_utilisateur" focusTraversable="false" layoutX="20.0" layoutY="113.0" prefHeight="535.0" prefWidth="1260.0" stylesheets="@css/style.css" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="60.0">
+                    <columns>
+                      <TableColumn fx:id="colonne_nom" prefWidth="298.6666660308838" text="Nom" />
+                      <TableColumn fx:id="colonne_prenoms" minWidth="0.0" prefWidth="386.6666564941406" text="Prenoms" />
+                        <TableColumn fx:id="colonne_identifiant" minWidth="0.0" prefWidth="200.0" text="Identifiant" />
+                        <TableColumn fx:id="colonne_statut" minWidth="0.0" prefWidth="115.0" text="Statut" />
+                        <TableColumn fx:id="colonne_actions" minWidth="0.0" prefWidth="300.0" text="Actions" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+                  <Label alignment="CENTER" layoutX="48.0" layoutY="14.0" text="Utilisateurs existant" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="bouton_ajouter_utilisateur" focusTraversable="false" layoutX="1152.0" layoutY="567.0" mnemonicParsing="false" onAction="#OuvrirBoiteDialogueAjouterUtilisateur" prefHeight="40.0" prefWidth="147.0" styleClass="consulter-button" stylesheets="@css/style.css" text="Ajouter un utilisateur" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="20.0" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+      <Tab onSelectionChanged="#initialize_personnel" text="Gestion du personnel">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="tableau_personnel" layoutX="132.0" layoutY="45.0" prefHeight="200.0" prefWidth="200.0" stylesheets="@css/style.css" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="60.0">
+                    <columns>
+                      <TableColumn fx:id="colonne_nom_personnel" prefWidth="250.0" text="Nom" />
+                      <TableColumn fx:id="colonne_prenoms_personnel" minWidth="6.666656494140625" prefWidth="350.0" text="Prenoms" />
+                        <TableColumn fx:id="colonne_fonction_personnel" prefWidth="200.0" text="Fonction" />
+                        <TableColumn fx:id="colonne_date_personnel" prefWidth="150.0" text="Date Prise Service" />
+                        <TableColumn fx:id="colonne_statut_personnel" prefWidth="100.0" text="Statut" />
+                        <TableColumn fx:id="colonne_action_personnel" prefWidth="200.0" text="Actions" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+                  <Button fx:id="bouton_ajouter_personnel" focusTraversable="false" mnemonicParsing="false" onAction="#OuvrirBoiteDialogueAjouterPersonnel" prefHeight="40.0" prefWidth="147.0" styleClass="consulter-button" stylesheets="@css/style.css" text="Ajouter du personnel" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="20.0" />
+                  <Label alignment="CENTER" text="Personnel" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
+      <Tab onSelectionChanged="#initialize_agence" text="Gestion des agences">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="tableau_agence" layoutX="197.0" layoutY="75.0" prefHeight="490.0" prefWidth="906.0" stylesheets="@css/style.css" AnchorPane.bottomAnchor="75.66666666666663" AnchorPane.leftAnchor="197.0" AnchorPane.rightAnchor="197.66666666666652" AnchorPane.topAnchor="75.0">
+                    <columns>
+                      <TableColumn fx:id="colonne_nom_agence" prefWidth="300.0" text="Nom" />
+                      <TableColumn fx:id="colonne_localisation_agence" prefWidth="300.0" text="Localisation" />
+                        <TableColumn fx:id="colonne_action_agence" prefWidth="300.0" text="Actions" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+                  <Button fx:id="bouton_ajouter_agence" focusTraversable="false" mnemonicParsing="false" onAction="#OuvrirBoiteDialogueAjouterAgence" prefHeight="40.0" prefWidth="147.0" styleClass="consulter-button" stylesheets="@css/style.css" text="Ajouter une agence" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="20.0" />
+                  <Label alignment="CENTER" prefHeight="41.0" prefWidth="1295.0" text="Agences" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab onSelectionChanged="#initialize_groupes" text="Gestion des groupes">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="tableau_groupe" layoutX="373.0" layoutY="76.0" prefHeight="481.0" prefWidth="550.0" stylesheets="@css/style.css" AnchorPane.bottomAnchor="75.33333333333326" AnchorPane.leftAnchor="373.0" AnchorPane.rightAnchor="372.33333333333326" AnchorPane.topAnchor="76.0">
+                     <columns>
+                        <TableColumn fx:id="colonne_nom_groupe" prefWidth="300.0" text="Nom" />
+                        <TableColumn fx:id="colonne_agence_groupe" prefWidth="300.0" text="Agence" />
+                        <TableColumn fx:id="colonne_action_groupe" prefWidth="300.0" text="Actions" />
+                     </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+                  <Button fx:id="bouton_ajouter_groupe" focusTraversable="false" mnemonicParsing="false" onAction="#OuvrirBoiteDialogueAjouterGroupe" prefHeight="40.0" prefWidth="147.0" styleClass="consulter-button" stylesheets="@css/style.css" text="Ajouter un groupe" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="20.0" />
+                  <Label alignment="CENTER" prefHeight="47.0" prefWidth="1295.0" text="Groupes" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+  </tabs>
+</TabPane>

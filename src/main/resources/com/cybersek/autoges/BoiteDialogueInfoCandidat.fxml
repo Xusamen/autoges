@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cybersek.autoges.BoiteDialogueInfoCandidatControleur">
+   <children>
+      <Label layoutX="10.0" layoutY="-4.0" text="Informations du candidat">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="10.0" layoutY="392.0" text="Inscription">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+      <Text fx:id="info_genre" layoutX="663.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="99.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="info_nom" layoutX="9.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="170.00000000000006">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="info_daate_naissance" layoutX="50.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="info_nom_jeune_fille" layoutX="241.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.50781249999977">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="info_prenoms" layoutX="413.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="200.3375473022461">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="info_lieu_naissance" layoutX="274.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Label layoutX="81.0" layoutY="57.0" prefHeight="17.0" prefWidth="30.0" text="Nom" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Label layoutX="489.0" layoutY="57.0" prefHeight="17.0" prefWidth="57.0" text="Prénoms" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Label layoutX="696.0" layoutY="57.0" prefHeight="17.0" prefWidth="46.0" text="Genre" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Label layoutX="264.0" layoutY="57.0" prefHeight="17.0" prefWidth="116.0" text="Nom de jeune fille" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Label layoutX="45.0" layoutY="125.0" prefHeight="17.0" prefWidth="116.0" text="Date de naissance" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Label layoutX="485.0" layoutY="125.0" prefHeight="17.0" prefWidth="65.0" text="Téléphone" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Label layoutX="683.0" layoutY="125.0" prefHeight="17.0" prefWidth="57.0" text="Résidence" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Label layoutX="268.0" layoutY="125.0" prefHeight="17.0" prefWidth="99.0" text="Lieu de naissance" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Text fx:id="info_type_doc" layoutX="19.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.50781249999977">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="info_agence" layoutX="29.0" layoutY="487.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.5078125">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="info_groupe" layoutX="202.0" layoutY="487.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.5078125">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="info_categorie" layoutX="406.0" layoutY="487.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.5078125">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="info_forfait" layoutX="576.0" layoutY="487.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.5078125">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="info_montant_formation" layoutX="786.0" layoutY="487.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Label layoutX="11.0" layoutY="200.0" prefHeight="17.0" prefWidth="170.0" text="Type de document d'identité" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Label layoutX="461.0" layoutY="200.0" prefHeight="17.0" prefWidth="116.0" text="Date de délivrance" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Label layoutX="653.0" layoutY="200.0" prefHeight="17.0" prefWidth="116.0" text="Lieu de délivrance" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Label layoutX="232.0" layoutY="200.0" prefHeight="17.0" prefWidth="180.0" text="Numero du document d'identité" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Label layoutX="824.0" layoutY="200.0" prefHeight="17.0" prefWidth="130.0" text="Numero ancien permis" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Label layoutX="259.0" layoutY="310.0" prefHeight="17.0" prefWidth="116.0" stylesheets="@css/style.css" text="Prénom Personne" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Label layoutX="38.0" layoutY="310.0" prefHeight="17.0" prefWidth="116.0" stylesheets="@css/style.css" text="Nom Personne" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Label layoutX="457.0" layoutY="310.0" prefHeight="17.0" prefWidth="125.0" stylesheets="@css/style.css" text="Téléphone Personne" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Label layoutX="38.0" layoutY="279.0" prefHeight="21.0" prefWidth="300.0" text="Personne à prevenir en cas de besoin" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="85.0" layoutY="442.0" prefHeight="17.0" prefWidth="46.0" text="Agence" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Label layoutX="255.0" layoutY="442.0" prefHeight="17.0" prefWidth="46.0" text="Groupe" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Label layoutX="425.0" layoutY="442.0" prefHeight="17.0" prefWidth="116.0" text="Categorie du permis" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Label layoutX="632.0" layoutY="442.0" prefHeight="17.0" prefWidth="46.0" text="Forfait" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Label layoutX="775.0" layoutY="442.0" prefHeight="17.0" prefWidth="151.0" style="-fx-text-fill: red;" text="Montant de la formation" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="856.0" layoutY="57.0" prefHeight="17.0" prefWidth="65.0" text="Proféssion" textFill="#2196f3">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Text fx:id="info_num_ancien_permis" layoutX="844.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Button layoutX="681.0" layoutY="561.0" mnemonicParsing="false" onAction="#FermerFenetre" prefHeight="25.0" prefWidth="80.0" styleClass="rouge-button" stylesheets="@css/button_bilan.css" text="Fermer" />
+      <Button layoutX="795.0" layoutY="561.0" mnemonicParsing="false" onAction="#ModifierCandidatInfo" prefHeight="25.0" prefWidth="180.0" styleClass="consulter-button" stylesheets="@css/button_bilan.css" text="Modifier Informations" />
+      <TextField fx:id="info_champ_telephone" layoutX="445.0" layoutY="154.0" stylesheets="@css/style.css" />
+      <TextField fx:id="info_champ_residence" layoutX="637.0" layoutY="154.0" stylesheets="@css/style.css" />
+      <TextField fx:id="info_champ_profession" layoutX="814.0" layoutY="79.0" stylesheets="@css/style.css" />
+      <TextField fx:id="info_champ_lieu_delivr" layoutX="636.0" layoutY="233.0" stylesheets="@css/style.css" />
+      <TextField fx:id="info_champ_date_delivr" layoutX="437.0" layoutY="233.0" stylesheets="@css/style.css" />
+      <TextField fx:id="info_champ_num_doc" layoutX="242.0" layoutY="232.0" stylesheets="@css/style.css" />
+      <TextField fx:id="info_champ_nom_pap" layoutX="19.0" layoutY="340.0" stylesheets="@css/style.css" />
+      <TextField fx:id="info_champ_prenom_pap" layoutX="234.0" layoutY="340.0" stylesheets="@css/style.css" />
+      <TextField fx:id="info_champ_telephone_pap" layoutX="445.0" layoutY="340.0" stylesheets="@css/style.css" />
+   </children>
+</Pane>
