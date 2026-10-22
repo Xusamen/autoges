@@ -72,7 +72,7 @@
                      <children>
                         <TabPane layoutX="129.0" layoutY="66.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                           <tabs>
-                            <Tab text="Enregister un service tier">
+                            <Tab text="Enregistrer un service tier">
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
@@ -85,7 +85,7 @@
                                                             <Font name="System Bold" size="25.0" />
                                                          </font>
                                                       </Label>
-                                                      <TextField fx:id="description_service_tiers" focusTraversable="false" layoutX="100.0" layoutY="236.0" prefHeight="25.0" prefWidth="160.0" stylesheets="@css/style.css" />
+                                                      <TextField fx:id="description_service_tiers" focusTraversable="false" layoutX="100.0" layoutY="236.0" prefHeight="25.0" prefWidth="200.0" stylesheets="@css/style.css" />
                                                       <Label layoutX="100.0" layoutY="219.0" prefHeight="17.0" prefWidth="180.0" text="Description du service" textFill="#2196f3">
                                                          <font>
                                                             <Font name="System Bold Italic" size="12.0" />
@@ -108,30 +108,30 @@
                                                          </font>
                                                       </Button>
                                                       <ChoiceBox fx:id="type_de_paiement_service_tiers" focusTraversable="false" layoutX="100.0" layoutY="306.0" prefHeight="25.0" prefWidth="180.0" stylesheets="@css/choice_box.css" />
-                                                      <Label layoutX="48.0" layoutY="106.0" prefHeight="17.0" prefWidth="158.0" text="Nom" textFill="#2196f3">
+                                                      <Label layoutX="59.0" layoutY="106.0" prefHeight="17.0" prefWidth="160.0" text="Nom" textFill="#2196f3">
                                                          <font>
                                                             <Font name="System Bold Italic" size="12.0" />
                                                          </font>
                                                       </Label>
-                                                      <Label layoutX="457.0" layoutY="106.0" prefHeight="17.0" prefWidth="159.0" text="Télephone" textFill="#2196f3">
+                                                      <Label layoutX="468.0" layoutY="106.0" prefHeight="17.0" prefWidth="160.0" text="Télephone" textFill="#2196f3">
                                                          <font>
                                                             <Font name="System Bold Italic" size="12.0" />
                                                          </font>
                                                       </Label>
-                                                      <TextField fx:id="nom_service_tiers" layoutX="48.0" layoutY="123.0" prefHeight="25.0" prefWidth="160.0" stylesheets="@css/style.css" />
-                                                      <TextField fx:id="telephone_service_tiers" layoutX="457.0" layoutY="123.0" prefHeight="25.0" prefWidth="160.0" stylesheets="@css/style.css" />
+                                                      <TextField fx:id="nom_service_tiers" layoutX="59.0" layoutY="123.0" prefHeight="25.0" prefWidth="160.0" stylesheets="@css/style.css" />
+                                                      <TextField fx:id="telephone_service_tiers" layoutX="468.0" layoutY="123.0" prefHeight="25.0" prefWidth="160.0" stylesheets="@css/style.css" />
                                                       <Label layoutX="400.0" layoutY="218.0" prefWidth="160.0" text="Nombre de seances" textFill="#2196f3">
                                                          <font>
                                                             <Font name="System Bold Italic" size="12.0" />
                                                          </font>
                                                       </Label>
                                                       <TextField fx:id="nombresceance_servicetiers" layoutX="400.0" layoutY="236.0" prefWidth="160.0" stylesheets="@css/style.css" />
-                                                      <Label layoutX="259.0" layoutY="106.0" prefHeight="17.0" prefWidth="180.0" text="Prenoms" textFill="#2196f3">
+                                                      <Label layoutX="270.0" layoutY="106.0" prefHeight="17.0" prefWidth="160.0" text="Prenoms" textFill="#2196f3">
                                                          <font>
                                                             <Font name="System Bold Italic" size="12.0" />
                                                          </font>
                                                       </Label>
-                                                      <TextField fx:id="prenom_service_tiers" layoutX="259.0" layoutY="123.0" prefHeight="25.0" prefWidth="160.0" stylesheets="@css/style.css" />
+                                                      <TextField fx:id="prenom_service_tiers" layoutX="270.0" layoutY="123.0" prefHeight="25.0" prefWidth="160.0" stylesheets="@css/style.css" />
                                                    </children>
                                                    <effect>
                                                       <DropShadow height="48.0" radius="29.0" width="70.0" />

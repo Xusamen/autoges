@@ -3,9 +3,11 @@ package com.cybersek.autoges.ModuleComptabilite;
 import com.cybersek.autoges.App;
 import com.cybersek.autoges.NomUser;
 import com.cybersek.autoges.StructureDonnee.DonneesVersementCandidat;
+import com.cybersek.autoges.StructureDonnee.InfoRecuServiceTier;
 import com.cybersek.autoges.StructureDonnee.TableauInfoTransaction;
 import com.cybersek.autoges.StructureDonnee.TableauRecette;
 import com.cybersek.autoges.StructureDonnee.TableauServiceTier;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -27,20 +29,6 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Recette {
 
     /**
-     * Enregistre un versement candidat (acompte / solde) sur sa dernière
-     * inscription
-     */
-    public static boolean enregistrerVersementCandidat(Long idCandidat, double montant, String modePaiement,
-            String utilisateur) {
-        // 1. Récupération de la dernière inscription active du candidat
-        // 2. Création de la transaction globale (Type: RECETTE)
-        // 3. Création de la ligne recette_candidat avec calcul auto du reste_a_payer
-        // 4. Mise à jour de inscription.montant_formation_total_solder si solde atteint
-        // 5. Génération et ouverture du reçu PDF via RecuPdfService
-        return true;
-    }
-
-    /**
      * Enregistre une recette hors-candidat (Service Tiers / Prestation externe)
      */
     public static boolean enregistrerServiceTiers(String nom, String prenom, String telephone,
@@ -51,15 +39,15 @@ public class Recette {
                 + "(reference, type, montant, mode_paiement, libelle, id_utilisateur, statut) "
                 + "VALUES (?, 'recette', ?, ?, ?, ?, 'validee')";
 
+        // Requête ajustée sans id_categorie
         String sqlAutreRecette = "INSERT INTO autres_recettes "
-                + "(id_transaction, id_categorie, nom_client, prenom_client, contact_client, source, description, nombre_seances) "
-                + "VALUES (?, NULL, ?, ?, ?, 'Service Tiers', ?, ?)";
+                + "(id_transaction, nom_client, prenom_client, contact_client, source, description, nombre_seances, numero_recu) "
+                + "VALUES (?, ?, ?, ?, 'Service Tiers', ?, ?, ?)";
 
-        // Référence : TRX + date + 6 chiffres aléatoires (17 caractères, colonne
-        // limitée à 30)
         String referenceTx = "TRX"
                 + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
                 + String.format("%06d", ThreadLocalRandom.current().nextInt(1_000_000));
+        String numeroRecu = "REC-" + System.currentTimeMillis();
 
         String libelleTx = tronquer("Prestation Service Tiers - " + nom + " " + prenom, 255);
         String details = tronquer(description, 255);
@@ -96,6 +84,7 @@ public class Recette {
                     ps.setString(4, telephone);
                     ps.setString(5, details);
                     ps.setInt(6, nombreSeances);
+                    ps.setString(7, numeroRecu);
                     ps.executeUpdate();
                 }
 
@@ -107,7 +96,6 @@ public class Recette {
                 throw e;
             }
         } catch (SQLException e) {
-            // logger.error("Échec de l'enregistrement du service tiers", e);
             e.printStackTrace();
             return false;
         }
@@ -131,16 +119,13 @@ public class Recette {
             case "chèque":
             case "cheque":
                 return "cheque";
-            case "carte bdf":
-            case "cb":
-                return "cb";
             case "virement":
                 return "virement";
             case "mobile money":
             case "mobile_money":
                 return "mobile_money";
             default:
-                return "autre";
+                return "especes"; // Valeur par défaut compatible avec l'ENUM SQL
         }
     }
 
@@ -620,7 +605,8 @@ public class Recette {
                 "t.montant AS montant_verse, " +
                 "rc.reste_a_payer AS somme_restante, " +
                 "t.created_at AS date_versement, " + // ou heure_transaction selon votre besoin
-                "rc.type_versement " +
+                "rc.type_versement, " +
+                "rc.numero_recu " +
                 "FROM recette_candidat rc " +
                 "JOIN transactions t ON rc.id_transaction = t.id " +
                 "JOIN candidat c ON rc.id_candidat = c.id " +
@@ -649,13 +635,95 @@ public class Recette {
                             rs.getDouble("montant_verse"),
                             rs.getDouble("somme_restante"),
                             rs.getString("date_versement"),
-                            rs.getString("type_versement"));
+                            rs.getString("type_versement"),
+                            rs.getString("numero_recu"));
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static ObservableList<TableauServiceTier> recupererTousLesServicesTiers() {
+        ObservableList<TableauServiceTier> liste = FXCollections.observableArrayList();
+
+        String sql = "SELECT ar.id, ar.nom_client, ar.prenom_client, ar.contact_client, ar.description, " +
+                "ar.nombre_seances, t.montant, t.created_at, YEAR(t.created_at) as annee " +
+                "FROM autres_recettes ar " +
+                "JOIN transactions t ON ar.id_transaction = t.id " +
+                "WHERE ar.source = 'Service Tiers' " +
+                "ORDER BY t.created_at DESC";
+
+        try (Connection cx = DriverManager.getConnection(App.url, App.utilisateur, App.motDePasse);
+                PreparedStatement ps = cx.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                int idServTiers = rs.getInt("id");
+                String nom = rs.getString("nom_client");
+                String prenom = rs.getString("prenom_client");
+                String contact = rs.getString("contact_client");
+                String description = rs.getString("description");
+                int nombreSeances = rs.getInt("nombre_seances");
+                BigDecimal montant = rs.getBigDecimal("montant");
+                int annee = rs.getInt("annee"); // Récupéré dynamiquement depuis la date
+
+                // Instanciation de votre objet (Adaptez selon le constructeur de votre classe
+                // TableauServiceTier)
+                TableauServiceTier item = new TableauServiceTier(idServTiers, nom, prenom, contact, description,
+                        nombreSeances, montant, annee);
+                liste.add(item);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return liste;
+    }
+
+    public static InfoRecuServiceTier recupererInfoRecuParId(long idAutreRecette) {
+        String sql = "SELECT ar.nom_client, ar.prenom_client, ar.description, ar.numero_recu, " +
+                "t.montant, t.created_at " +
+                "FROM autres_recettes ar " +
+                "JOIN transactions t ON ar.id_transaction = t.id " +
+                "WHERE ar.id = ?";
+
+        try (Connection cx = DriverManager.getConnection(App.url, App.utilisateur, App.motDePasse);
+                PreparedStatement ps = cx.prepareStatement(sql)) {
+
+            ps.setLong(1, idAutreRecette);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    String nom = rs.getString("nom_client");
+                    String prenom = rs.getString("prenom_client");
+
+                    // Formatage de la date de paiement (ex: dd/MM/yyyy HH:mm)
+                    String datePaiement = "";
+                    java.sql.Timestamp timestamp = rs.getTimestamp("created_at");
+                    if (timestamp != null) {
+                        datePaiement = timestamp.toLocalDateTime()
+                                .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+                    }
+
+                    String description = rs.getString("description");
+                    int montant = rs.getBigDecimal("montant").intValue(); // Conversion BigDecimal vers int pour votre
+                                                                          // PDF
+                    String numeroRecu = rs.getString("numero_recu");
+                    if (numeroRecu == null || numeroRecu.isEmpty()) {
+                        numeroRecu = "S/N"; // Valeur par défaut si aucun numéro n'est défini
+                    }
+
+                    return new InfoRecuServiceTier(nom, prenom, datePaiement, description, montant, numeroRecu);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null; // Retourne null si l'enregistrement n'est pas trouvé
     }
 
 }

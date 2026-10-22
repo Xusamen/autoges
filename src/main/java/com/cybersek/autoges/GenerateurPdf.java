@@ -67,7 +67,7 @@ public class GenerateurPdf {
 
     public static void CreationRecuVersement(String nom, String nom_de_jeune_fille, String prenom,
             String dateInscription, String forfait, String categoriePermis, Double montantVerse, Double sommeRestante,
-            String dateVersement, String typeVersement) {
+            String dateVersement, String typeVersement, String numero_recu) {
         try (PDDocument document = new PDDocument()) {
             PDRectangle formatA5Paysage = new PDRectangle(PDRectangle.A5.getHeight(), PDRectangle.A5.getWidth());
             PDPage page = new PDPage(formatA5Paysage);
@@ -77,7 +77,7 @@ public class GenerateurPdf {
                 float pageHauteur = formatA5Paysage.getHeight();
 
                 dessinerRecuVersement(contentStream, document, nom, prenom, dateInscription, forfait, categoriePermis,
-                        montantVerse, sommeRestante, dateVersement, typeVersement, "xxxx", 0, pageLargeur);
+                        montantVerse, sommeRestante, dateVersement, typeVersement, numero_recu, 0, pageLargeur);
             }
             String cheminRacine = System.getProperty("user.home") + "\\Documents\\NOURAT-AUTO-DOCS\\reçus\\";
             String nomduFichier = "reçu_versement_" + maintenant.format(formatterFichier) + ".pdf";
@@ -119,13 +119,13 @@ public class GenerateurPdf {
 
         contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 14);
         contentStream.beginText();
-        contentStream.newLineAtOffset(250, y);
+        contentStream.newLineAtOffset(200, y);
         contentStream.showText("REÇU N° : ");
         contentStream.endText();
 
         contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 14);
         contentStream.beginText();
-        contentStream.newLineAtOffset(325, y);
+        contentStream.newLineAtOffset(275, y);
         contentStream.showText(numero_recu);
         contentStream.endText();
 
@@ -211,245 +211,7 @@ public class GenerateurPdf {
         contentStream.showText(convertirFormatDate(dateVersement));
         contentStream.endText();
 
-        y -= 20;
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 12);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(10, y);
-        contentStream.showText("Reste à payer :");
-        contentStream.endText();
-
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(175, y);
-        contentStream.showText(sommeRestante + " Francs CFA");
-        contentStream.endText();
-
-        y -= 20;
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 12);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(10, y);
-        contentStream.showText("Tarif :");
-        contentStream.endText();
-
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(175, y);
-        contentStream.showText(forfait);
-        contentStream.endText();
-
-        y -= 20;
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 12);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(10, y);
-        contentStream.showText("Reçu généré par :");
-        contentStream.endText();
-
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(175, y);
-        contentStream.showText(NomUser.getlogger());
-        contentStream.endText();
-
-        y -= 10;
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(420, y);
-        contentStream.showText("Signature et cachet");
-        contentStream.endText();
-
-        y -= 80;
-        contentStream.setStrokingColor(0, 0, 0);
-        contentStream.setLineWidth(1); // Épaisseur du trait
-        contentStream.moveTo(10, y);
-        contentStream.lineTo(endX, y);
-        contentStream.stroke();
-
-        y -= 10;
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 10);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(10, y);
-        contentStream.showText("Note :");
-        contentStream.endText();
-
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 10);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(50, y);
-        contentStream.showText("Merci de conserver ce reçu.");
-        contentStream.endText();
-
-        y -= 10;
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 10);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(50, y);
-        contentStream.showText(
-                "Si vous avez des questions, veuillez contacter le responsable aux coordonnées fournies ci-dessus");
-        contentStream.endText();
-
-    }
-
-    // reçu d'inscription
-    public static void CreationRecuInscription(String nom, String prenom, String dateInscription, String forfait,
-            String categoriePermis, int montantVerse, int sommeRestante, String frais_de_dossier) {
-
-        try (PDDocument document = new PDDocument()) {
-            PDRectangle formatA5Paysage = new PDRectangle(PDRectangle.A5.getHeight(), PDRectangle.A5.getWidth());
-            PDPage page = new PDPage(formatA5Paysage);
-            document.addPage(page);
-            try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
-                float pageLargeur = formatA5Paysage.getWidth();
-                float pageHauteur = formatA5Paysage.getHeight();
-                String numero_recu = getNumeroRecu();
-
-                dessinerRecuInscrip(contentStream, document, nom, prenom, dateInscription, forfait, categoriePermis,
-                        montantVerse, sommeRestante, frais_de_dossier, numero_recu, 0, pageLargeur);
-            }
-            String cheminRacine = System.getProperty("user.home") + "\\Documents\\DAF-AUTO-DOCS\\reçus\\";
-            int prochainNumero = Function.recupererDernierNumeroRecu() + 1;
-            String numeroFormate = String.format("%02d", prochainNumero);
-            String nomduFichier = "Reçu-" + numeroFormate + ".pdf";
-            String cheminFichier = cheminRacine + nomduFichier;
-            document.save(cheminFichier);
-            document.close();
-        } catch (IOException erreur) {
-            System.err.println(erreur.getMessage());
-        }
-    }
-
-    private static void dessinerRecuInscrip(PDPageContentStream contentStream, PDDocument document, String nom,
-            String prenom, String dateInscription, String forfait, String categoriePermis, int montantVerse,
-            int sommeRestante, String frais_de_dossier, String numero_recu, float decalageY, float pageLargeur)
-            throws IOException {
-        float imageWidth = pageLargeur - 2 * 10;
-        float imageHeight = 90;
-        float imageX = 10;
-        float imageY = decalageY + (PDRectangle.A4.getHeight() / 2) - 10 - imageHeight;
-        float endX = pageLargeur - 10;
-
-        PDImageXObject pdImage = PDImageXObject.createFromByteArray(document,
-                Function.ajouterImageAuPDF(Function.chemin_image_entete), Function.chemin_image_entete);
-        contentStream.drawImage(pdImage, imageX, imageY, imageWidth, imageHeight);
-
-        float y = imageY - 20;
-
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 14);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(250, y);
-        contentStream.showText("REÇU N° : ");
-        contentStream.endText();
-
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 14);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(325, y);
-        contentStream.showText(numero_recu);
-        contentStream.endText();
-
-        y -= 20;
-        contentStream.setStrokingColor(0, 0, 0);
-        contentStream.setLineWidth(1);
-        contentStream.moveTo(10, y);
-        contentStream.lineTo(endX, y);
-        contentStream.stroke();
-
-        y -= 20;
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 12);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(10, y);
-        contentStream.showText("Reçu de :");
-        contentStream.endText();
-
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(100, y);
-        contentStream.showText(nom + "   " + prenom);
-        contentStream.endText();
-
-        y -= 20;
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 12);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(10, y);
-        contentStream.showText("Motif :");
-        contentStream.endText();
-
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(175, y);
-        contentStream.showText("Inscription");
-        contentStream.endText();
-
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 12);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(300, y);
-        contentStream.showText("Categorie du permis :");
-        contentStream.endText();
-
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(450, y);
-        contentStream.showText(categoriePermis);
-        contentStream.endText();
-
-        y -= 20;
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 12);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(10, y);
-        contentStream.showText("Date d'inscription :");
-        contentStream.endText();
-
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(175, y);
-        contentStream.showText(dateInscription);
-        contentStream.endText();
-
-        y -= 20;
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 12);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(10, y);
-        contentStream.showText("Somme versé :");
-        contentStream.endText();
-
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(175, y);
-        contentStream.showText(montantVerse + " Francs CFA");
-        contentStream.endText();
-
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 12);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(300, y);
-        contentStream.showText("Reste à payer :");
-        contentStream.endText();
-
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(450, y);
-        contentStream.showText(sommeRestante + " Francs CFA");
-        contentStream.endText();
-        y -= 20;
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 12);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(10, y);
-        contentStream.showText("Tarif :");
-        contentStream.endText();
-
-        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12);
-        contentStream.beginText();
-        contentStream.newLineAtOffset(175, y);
-        contentStream.showText(forfait);
-        contentStream.endText();
-
-        if (frais_de_dossier.equals("NON")) {
-            contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 12);
-            contentStream.beginText();
-            contentStream.newLineAtOffset(300, y);
-            contentStream.showText("Frais de dossier(inclus) :");
-            contentStream.endText();
-
-            contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12);
-            contentStream.beginText();
-            contentStream.newLineAtOffset(450, y);
-            contentStream.showText(frais_de_dossier);
-            contentStream.endText();
+        if (typeVersement != null && (typeVersement.equals("Frais Dossier") || typeVersement.equals("Frais Examen"))) {
             y -= 20;
             contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 12);
             contentStream.beginText();
@@ -460,20 +222,23 @@ public class GenerateurPdf {
             contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12);
             contentStream.beginText();
             contentStream.newLineAtOffset(175, y);
-            contentStream.showText(Nom_user.getlogger());
+            contentStream.showText(NomUser.getlogger());
             contentStream.endText();
-            y -= 30;
+
+            y -= 40;
             contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12);
             contentStream.beginText();
             contentStream.newLineAtOffset(420, y);
             contentStream.showText("Signature et cachet");
             contentStream.endText();
+
             y -= 80;
             contentStream.setStrokingColor(0, 0, 0);
             contentStream.setLineWidth(1); // Épaisseur du trait
             contentStream.moveTo(10, y);
             contentStream.lineTo(endX, y);
             contentStream.stroke();
+
             y -= 10;
             contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 10);
             contentStream.beginText();
@@ -486,6 +251,7 @@ public class GenerateurPdf {
             contentStream.newLineAtOffset(50, y);
             contentStream.showText("Merci de conserver ce reçu.");
             contentStream.endText();
+
             y -= 10;
             contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 10);
             contentStream.beginText();
@@ -494,30 +260,33 @@ public class GenerateurPdf {
                     "Si vous avez des questions, veuillez contacter le responsable aux coordonnées fournies ci-dessus");
             contentStream.endText();
 
-        } else if (frais_de_dossier.equals("COMPLET")) {
+        }
+
+        if (typeVersement != null && typeVersement.contains("Paiement Tranche")) {
             y -= 20;
             contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 12);
             contentStream.beginText();
             contentStream.newLineAtOffset(10, y);
-            contentStream.showText("Frais de dossier (inclus) :");
+            contentStream.showText("Reste à payer :");
             contentStream.endText();
 
             contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12);
             contentStream.beginText();
             contentStream.newLineAtOffset(175, y);
-            contentStream.showText("OUI");
+            contentStream.showText(sommeRestante + " Francs CFA");
             contentStream.endText();
 
+            y -= 20;
             contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 12);
             contentStream.beginText();
-            contentStream.newLineAtOffset(285, y);
-            contentStream.showText("Montant des frais de dossier :");
+            contentStream.newLineAtOffset(10, y);
+            contentStream.showText("Tarif :");
             contentStream.endText();
 
             contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12);
             contentStream.beginText();
-            contentStream.newLineAtOffset(450, y);
-            contentStream.showText(App.PRIX_FRAIS_DE_DOSSIER + " Francs CFA ");
+            contentStream.newLineAtOffset(175, y);
+            contentStream.showText(forfait);
             contentStream.endText();
 
             y -= 20;
@@ -530,17 +299,17 @@ public class GenerateurPdf {
             contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12);
             contentStream.beginText();
             contentStream.newLineAtOffset(175, y);
-            contentStream.showText(Nom_user.getlogger());
+            contentStream.showText(NomUser.getlogger());
             contentStream.endText();
 
-            y -= 20;
+            y -= 10;
             contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12);
             contentStream.beginText();
             contentStream.newLineAtOffset(420, y);
             contentStream.showText("Signature et cachet");
             contentStream.endText();
 
-            y -= 70;
+            y -= 80;
             contentStream.setStrokingColor(0, 0, 0);
             contentStream.setLineWidth(1); // Épaisseur du trait
             contentStream.moveTo(10, y);
@@ -559,6 +328,7 @@ public class GenerateurPdf {
             contentStream.newLineAtOffset(50, y);
             contentStream.showText("Merci de conserver ce reçu.");
             contentStream.endText();
+
             y -= 10;
             contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 10);
             contentStream.beginText();
@@ -567,12 +337,11 @@ public class GenerateurPdf {
                     "Si vous avez des questions, veuillez contacter le responsable aux coordonnées fournies ci-dessus");
             contentStream.endText();
         }
-
     }
 
     // reçu paiement services tiers
     public static void CreationRecuServiceTier(String nom, String prenom, String datePaiement, String description,
-            int montant) {
+            int montant, String numeroRecu) {
         try (PDDocument document = new PDDocument()) {
             PDRectangle formatA5Paysage = new PDRectangle(PDRectangle.A5.getHeight(), PDRectangle.A5.getWidth());
             PDPage page = new PDPage(formatA5Paysage);
@@ -581,18 +350,24 @@ public class GenerateurPdf {
             try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
                 float pageLargeur = formatA5Paysage.getWidth();
                 float pageHauteur = formatA5Paysage.getHeight();
-                String numero_recu = getNumeroRecu();
 
                 dessinerRecuServiceTier(contentStream, document, nom, prenom, datePaiement, description, montant,
-                        numero_recu, 0, pageLargeur);
+                        numeroRecu, 0, pageLargeur);
             }
-            String cheminRacine = System.getProperty("user.home") + "\\Documents\\DAF-AUTO-DOCS\\reçus\\";
-            int prochainNumero = Function.recupererDernierNumeroRecu() + 1;
-            String numeroFormate = String.format("%02d", prochainNumero);
-            String nomFichier = "Reçu-" + numeroFormate + ".pdf";
-            String cheminFichier = cheminRacine + nomFichier;
+            String cheminRacine = System.getProperty("user.home") + "\\Documents\\NOURAT-AUTO-DOCS\\reçus\\";
+            String nomduFichier = "reçu_versement_" + maintenant.format(formatterFichier) + ".pdf";
+            String cheminFichier = cheminRacine + nomduFichier;
+
+            java.io.File dossier = new java.io.File(cheminRacine);
+            if (!dossier.exists()) {
+                dossier.mkdirs();
+            }
+
+            document.save(cheminFichier);
+            System.out.println("PDF généré avec succès : " + cheminFichier);
             document.save(cheminFichier);
             document.close();
+            Functions.printPdfLePlusRecent(cheminRacine);
         } catch (IOException erreur) {
             System.err.println(erreur.getMessage());
         }
@@ -607,19 +382,19 @@ public class GenerateurPdf {
         float imageY = decalageY + (PDRectangle.A4.getHeight() / 2) - 10 - imageHeight;
         float endX = pageLargeur - 10;
         PDImageXObject pdImage = PDImageXObject.createFromByteArray(document,
-                Function.ajouterImageAuPDF(Function.chemin_image_entete), Function.chemin_image_entete);
+                GenerateurPdf.ajouterImageAuPDF(GenerateurPdf.chemin_image_entete), GenerateurPdf.chemin_image_entete);
         contentStream.drawImage(pdImage, imageX, imageY, imageWidth, imageHeight);
 
         float y = imageY - 20;
         contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 14);
         contentStream.beginText();
-        contentStream.newLineAtOffset(250, y);
+        contentStream.newLineAtOffset(200, y);
         contentStream.showText("Reçu N° : ");
         contentStream.endText();
 
         contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 14);
         contentStream.beginText();
-        contentStream.newLineAtOffset(325, y);
+        contentStream.newLineAtOffset(275, y);
         contentStream.showText(numero_recu);
         contentStream.endText();
 
@@ -691,7 +466,7 @@ public class GenerateurPdf {
         contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12);
         contentStream.beginText();
         contentStream.newLineAtOffset(175, y);
-        contentStream.showText(Nom_user.getlogger());
+        contentStream.showText(NomUser.getlogger());
         contentStream.endText();
 
         y -= 50;

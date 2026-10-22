@@ -6,11 +6,14 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.cybersek.autoges.StructureDonnee.InfoRecuServiceTier;
 import com.cybersek.autoges.StructureDonnee.TableauRecette;
 import com.cybersek.autoges.StructureDonnee.TableauServiceTier;
 import com.cybersek.autoges.ModuleCandidats.DossierCandidat;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -208,6 +211,8 @@ public class FenetreCaisseControleur {
     @FXML
     private TableView<?> tableau_sortie;
 
+    private ObservableList<TableauServiceTier> listeServicesTiers = FXCollections.observableArrayList();
+
     private void InitialiserChoiceBoxAnnee() {
         ObservableList<Integer> annees = DossierCandidat.ObtenirAnneesInscription();
         int anneeEnCours = LocalDate.now().getYear();
@@ -216,6 +221,92 @@ public class FenetreCaisseControleur {
         }
         choicebox_annee_versement.setItems(annees);
         choicebox_annee_versement.getSelectionModel().select(Integer.valueOf(anneeEnCours));
+    }
+
+    public void InitTableauServicesTiers() {
+        // 1. Configuration des liaisons avec les propriétés de la classe
+        // TableauServiceTier
+        colonne_nom_servtier.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        colonne_prenoms_servtier.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+        colonne_prestserv_servtier.setCellValueFactory(new PropertyValueFactory<>("description")); // ou prestation
+                                                                                                   // selon votre modèle
+        colonne_contact_servtier.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        colonne_montant_servtier.setCellValueFactory(new PropertyValueFactory<>("montant"));
+
+        // 2. Charger les années disponibles dans la ChoiceBox (ex: de 2023 à l'année
+        // courante)
+        int anneeCourante = LocalDate.now().getYear();
+        ObservableList<Integer> annees = FXCollections.observableArrayList();
+        for (int y = anneeCourante; y >= anneeCourante - 5; y--) {
+            annees.add(y);
+        }
+        choicebox_annee_servtier.setItems(annees);
+        choicebox_annee_servtier.setValue(anneeCourante); // Sélection par défaut
+
+        // 3. Charger les données depuis la base de données
+        chargerDonneesServicesTiers();
+
+        // 4. Configurer le filtrage dynamique (Nom, Prénom, Année)
+        FilteredList<TableauServiceTier> filteredData = new FilteredList<>(listeServicesTiers, b -> true);
+
+        // Écouteur sur le champ Nom
+        champ_nom_servtier.textProperty().addListener((observable, oldValue, newValue) -> {
+            appliquerFiltres(filteredData);
+        });
+
+        // Écouteur sur le champ Prénom
+        champ_prenom_servtier.textProperty().addListener((observable, oldValue, newValue) -> {
+            appliquerFiltres(filteredData);
+        });
+
+        // Écouteur sur la ChoiceBox Année
+        choicebox_annee_servtier.valueProperty().addListener((observable, oldValue, newValue) -> {
+            appliquerFiltres(filteredData);
+        });
+
+        // 5. Associer la liste filtrée au TableView
+        tableau_servtier.setItems(filteredData);
+    }
+
+    private void appliquerFiltres(FilteredList<TableauServiceTier> filteredData) {
+        filteredData.setPredicate(service -> {
+            // Filtre par Année (si la ligne possède une date ou un champ année)
+            Integer anneeSelectionnee = choicebox_annee_servtier.getValue();
+            if (anneeSelectionnee != null) {
+                // Supposons que votre objet possède une méthode getDate() ou getAnnee()
+                // Adaptez "service.getAnnee()" selon la structure de votre classe
+                // TableauServiceTier
+                if (service.getAnnee() != anneeSelectionnee) {
+                    return false;
+                }
+            }
+
+            // Filtre par Nom
+            String filtreNom = champ_nom_servtier.getText();
+            if (filtreNom != null && !filtreNom.trim().isEmpty()) {
+                String nomLower = filtreNom.toLowerCase().trim();
+                if (service.getNom() == null || !service.getNom().toLowerCase().contains(nomLower)) {
+                    return false;
+                }
+            }
+
+            // Filtre par Prénom
+            String filtrePrenom = champ_prenom_servtier.getText();
+            if (filtrePrenom != null && !filtrePrenom.trim().isEmpty()) {
+                String prenomLower = filtrePrenom.toLowerCase().trim();
+                if (service.getPrenom() == null || !service.getPrenom().toLowerCase().contains(prenomLower)) {
+                    return false;
+                }
+            }
+
+            return true; // Garder l'élément si tous les critères correspondent
+        });
+    }
+
+    // Méthode de chargement depuis la base de données (exemple)
+    private void chargerDonneesServicesTiers() {
+        listeServicesTiers.clear();
+        listeServicesTiers.addAll(Recette.recupererTousLesServicesTiers());
     }
 
     @FXML
@@ -245,10 +336,15 @@ public class FenetreCaisseControleur {
                         rafraichirDonnees();
                     }
                 });
+        type_de_paiement_service_tiers.setItems(FXCollections.observableArrayList(
+                "especes", "cheque", "virement", "mobile_money"));
+        type_de_paiement_service_tiers.getSelectionModel().selectFirst();
 
         // 5. Forcer le chargement initial des données pour que le tableau ne soit pas
         // vide à l'ouverture
         rafraichirDonnees();
+        InitTableauServicesTiers();
+        BoutonsActionsSevicesTiers();
     }
 
     @FXML
@@ -258,30 +354,99 @@ public class FenetreCaisseControleur {
 
     @FXML
     void Enregistrer_service_tiers(ActionEvent event) {
+        // 1. Récupération des valeurs textuelles
+        String nom = nom_service_tiers.getText() != null ? nom_service_tiers.getText().trim() : "";
+        String prenom = prenom_service_tiers.getText() != null ? prenom_service_tiers.getText().trim() : "";
+        String telephone = telephone_service_tiers.getText() != null ? telephone_service_tiers.getText().trim() : "";
+        String desc = description_service_tiers.getText() != null ? description_service_tiers.getText().trim() : "";
+        String strNombreSeance = nombresceance_servicetiers.getText() != null
+                ? nombresceance_servicetiers.getText().trim()
+                : "";
+        String strMontant = montant_servicetiers.getText() != null ? montant_servicetiers.getText().trim() : "";
+        String modePaiement = type_de_paiement_service_tiers.getValue();
 
-        try {
-            String nom = nom_service_tiers.getText().trim();
-            String prenom = prenom_service_tiers.getText().trim();
-            String telephone = telephone_service_tiers.getText().trim();
-            String desc = description_service_tiers.getText().trim();
-            int nombresceance = Integer.parseInt(nombresceance_servicetiers.getText().trim());
-            BigDecimal montant = new BigDecimal(montant_servicetiers.getText().replaceAll("\\s", "").replace(',', '.'));
-            String modePaiement = type_de_paiement_service_tiers.getValue();
-
-            boolean succes = Recette.enregistrerServiceTiers(nom, prenom, telephone, desc, nombresceance, montant,
-                    modePaiement);
-            if (succes) {
-                nom_service_tiers.clear();
-                prenom_service_tiers.clear();
-                description_service_tiers.clear();
-                montant_servicetiers.clear();
-                rafraichirDonnees();
-            }
-        } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Le montant saisi est invalide.", ButtonType.OK);
-            alert.showAndWait();
+        // 2. Contrôles de validation (Champs obligatoires et formats)
+        if (nom.isEmpty()) {
+            Functions.Alerte_erreur("Veuillez saisir le nom.");
+            nom_service_tiers.requestFocus();
+            return;
+        }
+        if (prenom.isEmpty()) {
+            Functions.Alerte_erreur("Veuillez saisir le prénom.");
+            prenom_service_tiers.requestFocus();
+            return;
+        }
+        if (telephone.isEmpty()) {
+            Functions.Alerte_erreur("Veuillez saisir le numéro de téléphone.");
+            telephone_service_tiers.requestFocus();
+            return;
+        }
+        // Optionnel : Validation basique du format du téléphone (chiffres, espaces,
+        // tirets, optionnel "+")
+        if (!telephone.matches("^\\+?[0-9\\s-]{8,15}$")) {
+            Functions.Alerte_erreur("Le format du numéro de téléphone est invalide.");
+            telephone_service_tiers.requestFocus();
+            return;
+        }
+        if (desc.isEmpty()) {
+            Functions.Alerte_erreur("Veuillez saisir la description.");
+            description_service_tiers.requestFocus();
+            return;
+        }
+        if (modePaiement == null || modePaiement.trim().isEmpty()) {
+            Functions.Alerte_erreur("Veuillez sélectionner un mode de paiement.");
+            type_de_paiement_service_tiers.requestFocus();
+            return;
+        }
+        if (strNombreSeance.isEmpty()) {
+            Functions.Alerte_erreur("Veuillez saisir le nombre de séances.");
+            nombresceance_servicetiers.requestFocus();
+            return;
+        }
+        if (strMontant.isEmpty()) {
+            Functions.Alerte_erreur("Veuillez saisir le montant.");
+            montant_servicetiers.requestFocus();
+            return;
         }
 
+        // 3. Traitement et conversion numérique sécurisés
+        try {
+            int nombresceance = Integer.parseInt(strNombreSeance);
+            if (nombresceance <= 0) {
+                Functions.Alerte_erreur("Le nombre de séances doit être supérieur à zéro.");
+                nombresceance_servicetiers.requestFocus();
+                return;
+            }
+
+            BigDecimal montant = new BigDecimal(strMontant.replaceAll("\\s", "").replace(',', '.'));
+            if (montant.compareTo(BigDecimal.ZERO) <= 0) {
+                Functions.Alerte_erreur("Le montant doit être supérieur à zéro.");
+                montant_servicetiers.requestFocus();
+                return;
+            }
+
+            // 4. Enregistrement en base de données
+            boolean succes = Recette.enregistrerServiceTiers(nom, prenom, telephone, desc, nombresceance, montant,
+                    modePaiement);
+
+            if (succes) {
+                Functions.Alerte_succes("Enregistré avec succès !");
+
+                // Nettoyage de tous les champs du formulaire
+                nom_service_tiers.clear();
+                prenom_service_tiers.clear();
+                telephone_service_tiers.clear();
+                description_service_tiers.clear();
+                nombresceance_servicetiers.clear();
+                montant_servicetiers.clear();
+                type_de_paiement_service_tiers.getSelectionModel().clearSelection();
+
+                rafraichirDonnees();
+            }
+
+        } catch (NumberFormatException e) {
+            Functions.Alerte_erreur("Erreur de format : veuillez vérifier le nombre de séances ou le montant.");
+        }
     }
 
     public void rafraichirDonnees() {
@@ -425,6 +590,65 @@ public class FenetreCaisseControleur {
                     }
 
                 });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(conteneurBoutons);
+                }
+            }
+        });
+    }
+
+    private void BoutonsActionsSevicesTiers() {
+        colonne_actions_servtier.setCellFactory(param -> new TableCell<TableauServiceTier, Void>() {
+            private final Button boutonImprimer = new Button("Imprimer");
+            private final Button boutonModifierRecu = new Button("Modifier reçu");
+
+            // Conteneur regroupant tous les boutons dans l'ordre souhaité
+            private final HBox conteneurBoutons = new HBox(6, boutonImprimer, boutonModifierRecu);
+
+            {
+                conteneurBoutons.setAlignment(Pos.CENTER);
+
+                // Styles des boutons (vous pouvez ajuster les couleurs selon votre charte
+                // graphique)
+                boutonImprimer.setStyle(
+                        "-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 6 10; -fx-cursor: hand; -fx-font-size: 11px;");
+                boutonModifierRecu.setStyle(
+                        "-fx-background-color: #ffc107; -fx-text-fill: black; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 6 10; -fx-cursor: hand; -fx-font-size: 11px;");
+                // 1. Action du bouton "Imprimer"
+                boutonImprimer.setOnAction(event -> {
+                    TableauServiceTier service = getTableView().getItems().get(getIndex());
+                    // TODO: Implémenter la logique d'impression du reçu ici
+                    System.out.println("Imprimer le reçu pour l'ID : " + service.getIdServTiers());
+                    InfoRecuServiceTier info = Recette.recupererInfoRecuParId(service.getIdServTiers());
+
+                    if (info != null) {
+                        GenerateurPdf.CreationRecuServiceTier(
+                                info.getNom(),
+                                info.getPrenom(),
+                                info.getDatePaiement(),
+                                info.getDescription(),
+                                info.getMontant(),
+                                info.getNumeroRecu()
+                        );
+                    } else {
+                        Functions.Alerte_erreur("Impossible de récupérer les informations pour l'impression.");
+                    }
+                });
+
+                // 2. Action du bouton "Modifier reçu"
+                boutonModifierRecu.setOnAction(event -> {
+                    TableauServiceTier service = getTableView().getItems().get(getIndex());
+                    // TODO: Implémenter la logique de modification du numéro de reçu ici
+                    System.out.println("Modifier le numéro de reçu pour l'ID : " + service.getIdServTiers());
+                });
+
             }
 
             @Override

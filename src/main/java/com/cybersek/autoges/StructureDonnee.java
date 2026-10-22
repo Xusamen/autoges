@@ -1,5 +1,6 @@
 package com.cybersek.autoges;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -720,48 +721,6 @@ public class StructureDonnee {
         }
     }
 
-    public static class TableauServiceTier {
-        private final long id;
-        private final String nom;
-        private final String prenom;
-        private final String contact;
-        private final String description;
-        private final int montant;
-
-        public TableauServiceTier(long id, String nom, String prenom, String contact, String description, int montant) {
-            this.id = id;
-            this.nom = nom;
-            this.prenom = prenom;
-            this.contact = contact;
-            this.description = description;
-            this.montant = montant;
-        }
-
-        public long getId() {
-            return id;
-        }
-
-        public String getNom() {
-            return nom;
-        }
-
-        public String getPrenom() {
-            return prenom;
-        }
-
-        public String getContact() {
-            return contact;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public int getMontant() {
-            return montant;
-        }
-    }
-
     public static class TableauInfoTransaction {
         private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -826,12 +785,14 @@ public class StructureDonnee {
         private double sommeRestante; // ou BigDecimal
         private String dateVersement;
         private String typeVersement;
+        private String numeroRecu;
 
         // Constructeur, Getters et Setters
         public DonneesVersementCandidat(long idCandidat, long idInscription, long idTransaction, long idRecetteCandidat,
                 int idAgence, String nom, String nomDeJeuneFille, String prenom,
                 String dateInscription, String forfait, String categoriePermis,
-                double montantVerse, double sommeRestante, String dateVersement, String typeVersement) {
+                double montantVerse, double sommeRestante, String dateVersement, String typeVersement,
+                String numeroRecu) {
             this.idCandidat = idCandidat;
             this.idInscription = idInscription;
             this.idTransaction = idTransaction;
@@ -847,6 +808,7 @@ public class StructureDonnee {
             this.sommeRestante = sommeRestante;
             this.dateVersement = dateVersement;
             this.typeVersement = typeVersement;
+            this.numeroRecu = numeroRecu;
         }
 
         // Getters
@@ -909,5 +871,111 @@ public class StructureDonnee {
         public String getTypeVersement() {
             return typeVersement;
         }
+
+        public String getNumeroRecu() {
+            return numeroRecu;
+        }
     }
+
+    public static class TableauServiceTier {
+        private int id_service_tiers;
+        private String nom;
+        private String prenom;
+        private String contact;
+        private String description;
+        private int nombreSceance;
+        private BigDecimal montant;
+        private int annee;
+
+        public TableauServiceTier(int id_service_tiers, String nom, String prenom, String contact, String description,
+                int nombreSceance, BigDecimal montant,
+                int annee) {
+            this.id_service_tiers = id_service_tiers;
+            this.nom = nom;
+            this.prenom = prenom;
+            this.contact = contact;
+            this.description = description;
+            this.montant = montant;
+            this.annee = annee;
+            this.nombreSceance = nombreSceance;
+        }
+
+        // Getters indispensables pour PropertyValueFactory et les filtres
+        public int getIdServTiers() {
+            return id_service_tiers;
+        }
+
+        public String getNom() {
+            return nom;
+        }
+
+        public String getPrenom() {
+            return prenom;
+        }
+
+        public String getContact() {
+            return contact;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public BigDecimal getMontant() {
+            return montant;
+        }
+
+        public int getAnnee() {
+            return annee;
+        }
+
+        public int getNombreSceance() {
+            return nombreSceance;
+        }
+    }
+
+    public static  class InfoRecuServiceTier {
+        private String nom;
+        private String prenom;
+        private String datePaiement;
+        private String description;
+        private int montant;
+        private String numeroRecu;
+
+        public InfoRecuServiceTier(String nom, String prenom, String datePaiement, String description, int montant,
+                String numeroRecu) {
+            this.nom = nom;
+            this.prenom = prenom;
+            this.datePaiement = datePaiement;
+            this.description = description;
+            this.montant = montant;
+            this.numeroRecu = numeroRecu;
+        }
+
+        // Getters
+        public String getNom() {
+            return nom;
+        }
+
+        public String getPrenom() {
+            return prenom;
+        }
+
+        public String getDatePaiement() {
+            return datePaiement;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public int getMontant() {
+            return montant;
+        }
+
+        public String getNumeroRecu() {
+            return numeroRecu;
+        }
+    }
+
 }

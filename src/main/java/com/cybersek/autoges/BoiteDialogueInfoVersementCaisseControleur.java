@@ -135,7 +135,7 @@ public class BoiteDialogueInfoVersementCaisseControleur {
                     DonneesVersementCandidat data = Recette.getDetailsVersement(transaction.getIdTransaction());
                     GenerateurPdf.CreationRecuVersement(data.getNom(), data.getNomDeJeuneFille(), data.getPrenom(),
                             data.getDateInscription(), data.getForfait(), data.getCategoriePermis(),
-                            data.getMontantVerse(), data.getSommeRestante(), data.getDateVersement(), data.getTypeVersement());
+                            data.getMontantVerse(), data.getSommeRestante(), data.getDateVersement(), data.getTypeVersement(), data.getNumeroRecu());
                 });
 
                 // 2. Action : Associer un numéro de reçu
