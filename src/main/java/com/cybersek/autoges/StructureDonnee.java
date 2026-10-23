@@ -877,8 +877,8 @@ public class StructureDonnee {
         }
     }
 
-    public static class TableauServiceTier {
-        private int id_service_tiers;
+    public static class TableauServiceTier {      
+        private long id_service_tiers;
         private String nom;
         private String prenom;
         private String contact;
@@ -887,7 +887,7 @@ public class StructureDonnee {
         private BigDecimal montant;
         private int annee;
 
-        public TableauServiceTier(int id_service_tiers, String nom, String prenom, String contact, String description,
+        public TableauServiceTier(long id_service_tiers, String nom, String prenom, String contact, String description,
                 int nombreSceance, BigDecimal montant,
                 int annee) {
             this.id_service_tiers = id_service_tiers;
@@ -901,7 +901,9 @@ public class StructureDonnee {
         }
 
         // Getters indispensables pour PropertyValueFactory et les filtres
-        public int getIdServTiers() {
+
+
+        public long getIdServTiers() {
             return id_service_tiers;
         }
 

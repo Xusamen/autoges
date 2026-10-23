@@ -76,17 +76,22 @@ public class FenetreCaisseControleur {
     @FXML
     private TableColumn<TableauRecette, Void> colonne_actions_versement;
 
+    
     // Decaissement
-
     @FXML
     private Button bouton_enregistrement_decaissement;
     @FXML
-    private TextField montant_decaissement;
-    @FXML
-    private ChoiceBox<?> motif_de_decaissement;
+    private TextField champ_description_decaissement;
 
     @FXML
-    private ChoiceBox<?> type_de_decaissement;
+    private TextField champ_montant_decaissement;
+    @FXML
+    private ChoiceBox<?> choicebox_motif_decaissement;
+
+    @FXML
+    private ChoiceBox<?> choicebox_type_decaissement;
+
+
 
     // Service tiers
     @FXML
@@ -235,13 +240,18 @@ public class FenetreCaisseControleur {
 
         // 2. Charger les années disponibles dans la ChoiceBox (ex: de 2023 à l'année
         // courante)
-        int anneeCourante = LocalDate.now().getYear();
-        ObservableList<Integer> annees = FXCollections.observableArrayList();
-        for (int y = anneeCourante; y >= anneeCourante - 5; y--) {
-            annees.add(y);
-        }
+        // 1. Récupérer les années depuis la base de données
+        ObservableList<Integer> annees = Recette.recupererAnneesServicesTiers();
         choicebox_annee_servtier.setItems(annees);
-        choicebox_annee_servtier.setValue(anneeCourante); // Sélection par défaut
+
+        // 2. Sélectionner l'année courante par défaut si elle existe dans la liste,
+        // sinon la première disponible
+        int anneeCourante = LocalDate.now().getYear();
+        if (annees.contains(anneeCourante)) {
+            choicebox_annee_servtier.setValue(anneeCourante);
+        } else if (!annees.isEmpty()) {
+            choicebox_annee_servtier.setValue(annees.get(0));
+        } // Sélection par défaut
 
         // 3. Charger les données depuis la base de données
         chargerDonneesServicesTiers();
@@ -441,7 +451,7 @@ public class FenetreCaisseControleur {
                 montant_servicetiers.clear();
                 type_de_paiement_service_tiers.getSelectionModel().clearSelection();
 
-                rafraichirDonnees();
+                initialize();
             }
 
         } catch (NumberFormatException e) {
@@ -604,6 +614,12 @@ public class FenetreCaisseControleur {
         });
     }
 
+    private static Stage BoiteDialogueModifierNumeroRecu;
+
+    public static void FermerBoiteDialogueModifierNumeroRecu() {
+        BoiteDialogueModifierNumeroRecu.close();
+    }
+
     private void BoutonsActionsSevicesTiers() {
         colonne_actions_servtier.setCellFactory(param -> new TableCell<TableauServiceTier, Void>() {
             private final Button boutonImprimer = new Button("Imprimer");
@@ -624,7 +640,6 @@ public class FenetreCaisseControleur {
                 // 1. Action du bouton "Imprimer"
                 boutonImprimer.setOnAction(event -> {
                     TableauServiceTier service = getTableView().getItems().get(getIndex());
-                    // TODO: Implémenter la logique d'impression du reçu ici
                     System.out.println("Imprimer le reçu pour l'ID : " + service.getIdServTiers());
                     InfoRecuServiceTier info = Recette.recupererInfoRecuParId(service.getIdServTiers());
 
@@ -635,8 +650,7 @@ public class FenetreCaisseControleur {
                                 info.getDatePaiement(),
                                 info.getDescription(),
                                 info.getMontant(),
-                                info.getNumeroRecu()
-                        );
+                                info.getNumeroRecu());
                     } else {
                         Functions.Alerte_erreur("Impossible de récupérer les informations pour l'impression.");
                     }
@@ -645,8 +659,35 @@ public class FenetreCaisseControleur {
                 // 2. Action du bouton "Modifier reçu"
                 boutonModifierRecu.setOnAction(event -> {
                     TableauServiceTier service = getTableView().getItems().get(getIndex());
-                    // TODO: Implémenter la logique de modification du numéro de reçu ici
                     System.out.println("Modifier le numéro de reçu pour l'ID : " + service.getIdServTiers());
+                    try {
+                        FXMLLoader loader = new FXMLLoader(
+                                getClass().getResource("BoiteDialogueModifierNumeroRecu.fxml"));
+                        Parent root = loader.load();
+                        root.setStyle("-fx-background-color: white; -fx-background-radius: 15;");
+                        root.setEffect(Functions.ArrierePlan());
+
+                        StackPane contenaire = new StackPane(root);
+                        contenaire.setStyle("-fx-background-color: white; -fx-background-radius: 20;");
+                        contenaire.setPadding(new Insets(20));
+
+                        BoiteDialogueModifierNumeroRecuControleur controleur = loader.getController();
+                        controleur.chargerDonneesServTiers(service.getIdServTiers());
+
+                        BoiteDialogueModifierNumeroRecu = new Stage();
+                        BoiteDialogueModifierNumeroRecu.setResizable(false);
+                        BoiteDialogueModifierNumeroRecu.initModality(Modality.APPLICATION_MODAL);
+                        BoiteDialogueModifierNumeroRecu
+                                .initOwner(((javafx.scene.Node) event.getSource()).getScene().getWindow());
+                        BoiteDialogueModifierNumeroRecu.initStyle(StageStyle.TRANSPARENT);
+
+                        Scene scene = new Scene(contenaire);
+                        scene.setFill(Color.TRANSPARENT);
+                        BoiteDialogueModifierNumeroRecu.setScene(scene);
+                        BoiteDialogueModifierNumeroRecu.showAndWait();
+                    } catch (IOException erreur) {
+                        System.err.println(erreur.getMessage());
+                    }
                 });
 
             }

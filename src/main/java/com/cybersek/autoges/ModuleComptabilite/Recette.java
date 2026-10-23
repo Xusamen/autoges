@@ -555,6 +555,35 @@ public class Recette {
         return numeroRecu;
     }
 
+    public static String[] InfoServTier(Long IdServTier) {
+        String numeroRecu = null;
+        String reference = null;
+
+        // Correction du nom de la table (autres_recettes et non autres_recette) et de
+        // l'alias (ar)
+        String sql = "SELECT t.reference, ar.numero_recu " +
+                "FROM autres_recettes ar " +
+                "JOIN transactions t ON ar.id_transaction = t.id " +
+                "WHERE ar.id = ?";
+
+        try (Connection connexion = DriverManager.getConnection(App.url, App.utilisateur, App.motDePasse);
+                PreparedStatement statement = connexion.prepareStatement(sql)) {
+
+            statement.setLong(1, IdServTier);
+
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    reference = rs.getString("reference");
+                    numeroRecu = rs.getString("numero_recu");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la récupération des informations : " + e.getMessage());
+        }
+
+        return new String[] { reference, numeroRecu };
+    }
+
     public static boolean mettreAJourNumeroRecu(long idTransaction, String numeroRecu) {
         String sql = "UPDATE recette_candidat SET numero_recu = ? WHERE id_transaction = ?";
         try (Connection connexion = DriverManager.getConnection(App.url, App.utilisateur, App.motDePasse);
@@ -726,4 +755,35 @@ public class Recette {
         return null; // Retourne null si l'enregistrement n'est pas trouvé
     }
 
+    public static ObservableList<Integer> recupererAnneesServicesTiers() {
+        ObservableList<Integer> annees = FXCollections.observableArrayList();
+
+        // Requête pour récupérer les années distinctes des transactions liées aux
+        // services tiers
+        String sql = "SELECT DISTINCT YEAR(t.created_at) AS annee " +
+                "FROM autres_recettes ar " +
+                "JOIN transactions t ON ar.id_transaction = t.id " +
+                "WHERE ar.source = 'Service Tiers' " +
+                "ORDER BY annee DESC";
+
+        try (Connection cx = DriverManager.getConnection(App.url, App.utilisateur, App.motDePasse);
+                PreparedStatement ps = cx.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                annees.add(rs.getInt("annee"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Sécurité : Si la base est vide, on ajoute au moins l'année courante pour
+        // éviter une ChoiceBox vide
+        if (annees.isEmpty()) {
+            annees.add(LocalDate.now().getYear());
+        }
+
+        return annees;
+    }
 }

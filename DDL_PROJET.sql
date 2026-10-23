@@ -177,15 +177,18 @@ CREATE TABLE `recette_candidat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `autres_recettes` (
-  `id`               BIGINT AUTO_INCREMENT PRIMARY KEY,
-  `id_transaction`   BIGINT NOT NULL UNIQUE,
-  `id_categorie`     INT NULL,
-  `source`           VARCHAR(150) NULL,
-  `description`      VARCHAR(255) NULL,
-  `numero_recu`      VARCHAR(30) UNIQUE NULL,
-  `created_at`       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (`id_transaction`) REFERENCES `transactions`(`id`) ON DELETE CASCADE,
-  FOREIGN KEY (`id_categorie`) REFERENCES `categories_transaction`(`id`)
+  `id`              BIGINT AUTO_INCREMENT PRIMARY KEY,
+  `id_transaction`  BIGINT NOT NULL UNIQUE,
+  `nom_client`      VARCHAR(255) NULL,
+  `prenom_client`   VARCHAR(255) NULL,
+  `contact_client`  VARCHAR(100) NULL,
+  `source`          VARCHAR(150) NULL,
+  `description`     VARCHAR(255) NULL,
+  `nombre_seances`  INT NULL,
+  `numero_recu`     VARCHAR(30) UNIQUE NULL,
+  `created_at`      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT `chk_nombre_seances` CHECK (`nombre_seances` IS NULL OR `nombre_seances` > 0),
+  FOREIGN KEY (`id_transaction`) REFERENCES `transactions`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `depense` (
