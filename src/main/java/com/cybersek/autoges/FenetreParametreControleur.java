@@ -114,15 +114,6 @@ public class FenetreParametreControleur {
     @FXML
     private TableView<Personnel> tableau_personnel;
 
-    private DropShadow ArrierePlan() {
-        DropShadow ombre = new DropShadow();
-        ombre.setHeight(45.07);
-        ombre.setWidth(53.25);
-        ombre.setRadius(24.08);
-        ombre.setColor(Color.BLACK);
-        return ombre;
-    }
-
     @FXML
     public void initialize_utilisateur() {
         colonne_identifiant.setCellValueFactory(new PropertyValueFactory<>("identifiant"));
@@ -173,7 +164,7 @@ public class FenetreParametreControleur {
                     getClass().getResource("BoiteDialogueAjouterUtilisateur.fxml"));
             Parent root = loader.load();
             root.setStyle("-fx-background-color: white; -fx-background-radius: 15;");
-            root.setEffect(ArrierePlan());
+            root.setEffect(Functions.ArrierePlan());
             StackPane contenaire = new StackPane(root);
             contenaire.setStyle("-fx-background-color: white; -fx-background-radius: 20;");
             contenaire.setPadding(new Insets(20));
@@ -208,7 +199,7 @@ public class FenetreParametreControleur {
                     getClass().getResource("BoiteDialogueAjouterAgence.fxml"));
             Parent root = loader.load();
             root.setStyle("-fx-background-color: white; -fx-background-radius: 15;");
-            root.setEffect(ArrierePlan());
+            root.setEffect(Functions.ArrierePlan());
             StackPane contenaire = new StackPane(root);
             contenaire.setStyle("-fx-background-color: white; -fx-background-radius: 20;");
             contenaire.setPadding(new Insets(20));
@@ -290,7 +281,7 @@ public class FenetreParametreControleur {
                                         getClass().getResource("BoiteDialogueModifierUtilisateur.fxml"));
                                 Parent root = loader.load();
                                 root.setStyle("-fx-background-color: white; -fx-background-radius: 15;");
-                                root.setEffect(ArrierePlan());
+                                root.setEffect(Functions.ArrierePlan());
 
                                 StackPane contenaire = new StackPane(root);
                                 contenaire.setStyle("-fx-background-color: white; -fx-background-radius: 20;");
@@ -476,7 +467,7 @@ public class FenetreParametreControleur {
                                             getClass().getResource("BoiteDialogueModifierPersonnel.fxml"));
                                     Parent root = loader.load();
                                     root.setStyle("-fx-background-color: white; -fx-background-radius: 15;");
-                                    root.setEffect(ArrierePlan());
+                                    root.setEffect(Functions.ArrierePlan());
 
                                     StackPane contenaire = new StackPane(root);
                                     contenaire.setStyle("-fx-background-color: white; -fx-background-radius: 20;");
@@ -552,7 +543,7 @@ public class FenetreParametreControleur {
                     getClass().getResource("BoiteDialogueAjouterGroupe.fxml"));
             Parent root = loader.load();
             root.setStyle("-fx-background-color: white; -fx-background-radius: 15;");
-            root.setEffect(ArrierePlan());
+            root.setEffect(Functions.ArrierePlan());
             StackPane contenaire = new StackPane(root);
             contenaire.setStyle("-fx-background-color: white; -fx-background-radius: 20;");
             contenaire.setPadding(new Insets(20));
@@ -588,7 +579,7 @@ public class FenetreParametreControleur {
                     getClass().getResource("BoiteDialogueAjouterPersonnel.fxml"));
             Parent root = loader.load();
             root.setStyle("-fx-background-color: white; -fx-background-radius: 15;");
-            root.setEffect(ArrierePlan());
+            root.setEffect(Functions.ArrierePlan());
             StackPane contenaire = new StackPane(root);
             contenaire.setStyle("-fx-background-color: white; -fx-background-radius: 20;");
             contenaire.setPadding(new Insets(20));

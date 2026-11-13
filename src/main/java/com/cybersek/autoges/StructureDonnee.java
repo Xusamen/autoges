@@ -877,7 +877,7 @@ public class StructureDonnee {
         }
     }
 
-    public static class TableauServiceTier {      
+    public static class TableauServiceTier {
         private long id_service_tiers;
         private String nom;
         private String prenom;
@@ -901,7 +901,6 @@ public class StructureDonnee {
         }
 
         // Getters indispensables pour PropertyValueFactory et les filtres
-
 
         public long getIdServTiers() {
             return id_service_tiers;
@@ -936,7 +935,7 @@ public class StructureDonnee {
         }
     }
 
-    public static  class InfoRecuServiceTier {
+    public static class InfoRecuServiceTier {
         private String nom;
         private String prenom;
         private String datePaiement;
@@ -980,4 +979,52 @@ public class StructureDonnee {
         }
     }
 
+public static class InfoSessionExamen {
+        private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        private int id;
+        private String typeExamen;
+        private String categorieExamen;
+        private LocalDate dateExamen;
+        private String statut;
+        private int nombreCandidats;
+
+        public InfoSessionExamen(int id, String typeExamen, String categorieExamen, LocalDate dateExamen,
+                String statut, int nombreCandidats) {
+            this.id = id;
+            this.typeExamen = typeExamen;
+            this.categorieExamen = categorieExamen;
+            this.dateExamen = dateExamen;
+            this.statut = statut;
+            this.nombreCandidats = nombreCandidats;
+        }
+
+        // Getters
+        public int getId() {
+            return id;
+        }
+
+        public String getTypeExamen() {
+            return typeExamen;
+        }
+
+        public String getCategorieExamen() {
+            return categorieExamen;
+        }
+
+        public String getDateExamen() {
+            if (dateExamen != null) {
+                return dateExamen.format(DATE_FORMATTER); // Correction ici (.format direct sur LocalDate)
+            }
+            return "";
+        }
+
+        public String getStatut() {
+            return statut;
+        }
+
+        public int getNombreCandidats() {
+            return nombreCandidats;
+        }
+    }
 }

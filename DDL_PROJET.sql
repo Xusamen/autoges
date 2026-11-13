@@ -245,3 +245,26 @@ CREATE TABLE `fournisseurs` (
   `statut`           ENUM('actif','inactif') DEFAULT 'actif',
   `created_at`       TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `session_examen` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `type_examen` ENUM('CODE', 'CRENEAU', 'CONDUITE') NOT NULL,
+  `categorie_examen` ENUM('POID LEGER', 'POID LOURD') DEFAULT NULL,
+  `date_examen` DATE NOT NULL,
+  `statut` ENUM('OUVERTE', 'FERMER') NOT NULL DEFAULT 'OUVERTE',
+  `date_creation` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `candidat_examen` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `id_session_examen` BIGINT NOT NULL,
+  `id_inscription` BIGINT NOT NULL,
+  `statut` ENUM('PROGRAMME', 'ADMIS', 'AJOURNE', 'ABSENT') NOT NULL DEFAULT 'PROGRAMME',
+  `tentative` INT NOT NULL DEFAULT 1,
+  `date_creation` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`id_session_examen`) REFERENCES `session_examen`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`id_inscription`) REFERENCES `inscription`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
